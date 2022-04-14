@@ -5,45 +5,44 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import routeData from "./data/routeData.js"
 
 export default function App() {
+  
+  const navArray = routeData.map(doc=>{
+    return(
+      <li key={doc.id}>
+        <Link to={"/"+doc.id}>{doc.title}</Link>
+      </li>
+    )
+  })
+
+  const infoArray=routeData.map(doc =>{
+    return(
+      <Route key={doc.id} path={"/"+doc.id} element={<Info doc={doc} />}/>
+    )
+  })
+  
   return (
     <BrowserRouter>
       <div>
         <nav>
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/cats">Cats</Link>
-            </li>
-            <li>
-              <Link to="/dogs">Dogs</Link>
-            </li>
+            {navArray}
           </ul>
         </nav>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Routes>
-          <Route path="/cats" element={<Cats />}/>
-          <Route path="/dogs" element={<Dogs />}/>
-          <Route path="/" element={<Home/>}/>
+          {infoArray}
         </Routes>
       </div>
     </BrowserRouter>
   );
 }
 
-function Home() {
-  return <h2>Это домашняя страница</h2>;
-}
-
-function Cats() {
-  return <h2>Это список котиков</h2>;
-}
-
-function Dogs() {
-  return <h2>Это список песиков</h2>;
+function Info(props) {
+  return (
+    <h2>
+      {props.doc.description}
+    </h2>)
 }
