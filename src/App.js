@@ -70,8 +70,7 @@ function Info(props) {
         
     )
   })
-  console.log(props.path)
-  console.log(nestedInfoArray)
+
   return (
     <div>
       <h2>{props.doc.description}</h2>
